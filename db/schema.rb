@@ -11,10 +11,52 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160127004850) do
+ActiveRecord::Schema.define(version: 20160211233106) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "addresses", force: :cascade do |t|
+    t.string   "street"
+    t.decimal  "number"
+    t.string   "postal_code"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "clients", force: :cascade do |t|
+    t.string   "name"
+    t.string   "email"
+    t.date     "birth_date"
+    t.integer  "address_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "clients", ["address_id"], name: "index_clients_on_address_id", using: :btree
+
+  create_table "payments", force: :cascade do |t|
+    t.date     "due_at"
+    t.date     "ref_date"
+    t.datetime "paid_at"
+    t.decimal  "value",      precision: 2, scale: 2
+    t.integer  "client_id"
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+  end
+
+  add_index "payments", ["client_id"], name: "index_payments_on_client_id", using: :btree
+
+  create_table "phones", force: :cascade do |t|
+    t.decimal  "area_code"
+    t.decimal  "number"
+    t.integer  "type",       default: 0
+    t.integer  "client_id"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "phones", ["client_id"], name: "index_phones_on_client_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -50,4 +92,7 @@ ActiveRecord::Schema.define(version: 20160127004850) do
   add_index "users", ["invited_by_id"], name: "index_users_on_invited_by_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "clients", "addresses"
+  add_foreign_key "payments", "clients"
+  add_foreign_key "phones", "clients"
 end
