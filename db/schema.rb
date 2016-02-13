@@ -48,8 +48,8 @@ ActiveRecord::Schema.define(version: 20160211233106) do
   add_index "payments", ["client_id"], name: "index_payments_on_client_id", using: :btree
 
   create_table "phones", force: :cascade do |t|
-    t.decimal  "area_code"
-    t.decimal  "number"
+    t.string   "area_code"
+    t.string   "number"
     t.integer  "type",       default: 0
     t.integer  "client_id"
     t.datetime "created_at",             null: false
