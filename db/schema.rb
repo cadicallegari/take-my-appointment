@@ -36,13 +36,13 @@ ActiveRecord::Schema.define(version: 20160211233106) do
   add_index "clients", ["address_id"], name: "index_clients_on_address_id", using: :btree
 
   create_table "payments", force: :cascade do |t|
-    t.date     "due_at"
+    t.date     "due_date"
     t.date     "ref_date"
     t.datetime "paid_at"
-    t.decimal  "value",      precision: 2, scale: 2
+    t.decimal  "value",      precision: 15, scale: 2
     t.integer  "client_id"
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
   end
 
   add_index "payments", ["client_id"], name: "index_payments_on_client_id", using: :btree
