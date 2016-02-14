@@ -34,7 +34,6 @@ describe Phone do
     }.to raise_error(ActiveRecord::RecordInvalid)
   end
 
-
   it "raise error without number" do
     expect {
       FactoryGirl.create(:phone, number: nil)
@@ -51,6 +50,10 @@ describe Phone do
     expect {
       FactoryGirl.create(:phone, client: nil)
     }.to raise_error(ActiveRecord::RecordInvalid)
+  end
+
+  it "create without problems" do
+    expect(FactoryGirl.create(:phone)).to be_valid
   end
 
 end
