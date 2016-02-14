@@ -46,4 +46,8 @@ describe Address do
     }.to raise_error(ActiveRecord::RecordInvalid)
   end
 
+  it "create without problems" do
+    expect(FactoryGirl.create(:address)).to be_valid
+  end
+
 end
