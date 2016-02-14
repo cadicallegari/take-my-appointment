@@ -1,10 +1,10 @@
 FactoryGirl.define do
   factory :payment do
-    due_at "2016-02-11"
-ref_date "2016-02-11"
-paid_at "2016-02-11 21:20:41"
-value "9.99"
-client nil
+    due_date DateTime.now.tomorrow
+    ref_date 1.month.ago
+    paid_at  DateTime.now
+    value   70.50
+    association :client, factory: :client
   end
 
 end
